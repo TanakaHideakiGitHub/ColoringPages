@@ -6,7 +6,7 @@ namespace Tanaka
     {
         None = 99,
 
-        // 以下は UnityEngine.TouchPhase の値に対応
+        // UnityEngine.TouchPhaseに対応
         Began = 0,
         Moved,
         Stationary,
