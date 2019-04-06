@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/BaseScene.unity
+    guid: 507359367880d9b4c8086b6d8e0e7443
+  - enabled: 1
+    path: Assets/Scenes/ColoringPages.unity
+    guid: e1dd1f19954044a48bcc0360cd78ec47
+  - enabled: 1
+    path: Assets/Scenes/PictureBook.unity
+    guid: 8dc6c2b491c9ac34bbc9efa968f0cd9d
   m_configObjects: {}
