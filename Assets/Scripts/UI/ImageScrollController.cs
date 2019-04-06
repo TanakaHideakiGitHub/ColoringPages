@@ -18,11 +18,15 @@ public class ImageScrollController : MonoBehaviour
 
     private ImageScrollModel imagesModel;
 
-    public bool IsOpend { get { return gameObject.activeSelf; } }
+    /// <summary>
+    /// スクロールが開いているかどうか
+    /// </summary>
+    public bool IsOpend { get { return viewer.gameObject.activeSelf; } }
 
     private void Start()
     {
         viewer.SetNodeButtonAction(SetNodeTexture4EdgeTexture);
+        Close();
     }
 
     public void Initialize()
@@ -40,11 +44,18 @@ public class ImageScrollController : MonoBehaviour
     {
         painter.IsUnpaintable = true;
         viewer.ResetScrollerPosition();
-        gameObject.SetActive(true);
+        viewer.gameObject.SetActive(true);
     }
     public void Close()
     {
-        gameObject.SetActive(false);
+        viewer.gameObject.SetActive(false);
+        StartCoroutine(SetCloseAfterFrame());
+    }
+    private IEnumerator SetCloseAfterFrame()
+    {
+        // スクロールを閉じると同時にフラグOFFだと閉じるためのクリックで
+        // 書き込みが行われてしまうので1F待つ
+        yield return null;
         painter.IsUnpaintable = false;
     }
 

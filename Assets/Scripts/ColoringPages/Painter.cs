@@ -52,7 +52,7 @@ public class Painter : MonoBehaviour
 
         CreatePage();
         ImageScroller.Initialize();
-        ImageScroller.gameObject.SetActive(false);
+        //ImageScroller.gameObject.SetActive(false);
     }
 	
 	void Update ()

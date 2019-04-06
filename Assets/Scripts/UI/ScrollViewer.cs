@@ -105,7 +105,7 @@ public class ScrollViewer : MonoBehaviour
         scrollHeight = Mathf.Max(1, ((itemsCount - 1) / ColumnCount) + 1) * ItemsHeight;
         viewContent.offsetMin = new Vector2(0, -scrollHeight);
 
-        for (int i = 0; i < list.Count; ++i)
+        for (int i = 0; i < ItemList.Count; ++i)
         {
             var image = ItemList.ElementAt(i).GetComponent<Image>();
             image.sprite = list[i];

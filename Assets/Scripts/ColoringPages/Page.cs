@@ -26,6 +26,7 @@ public class Page
     /// </summary>
     private class Brush
     {
+        public static readonly int SCALING_SIZE = 5;
         public int Width = 8;
         public int Height = 8;
         /// <summary> 現在色保持用 </summary>
@@ -67,7 +68,7 @@ public class Page
 
     public void ChangeScale(int addScl)
     {
-        brush.Width = Mathf.Max(1, brush.Width + addScl);
+        brush.Width = Mathf.Max(1, brush.Width + addScl * Brush.SCALING_SIZE);
     }
     public void ColorChange(Color col)
     {

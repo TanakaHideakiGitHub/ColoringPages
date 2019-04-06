@@ -17,11 +17,6 @@ public class ScaleMenuButton : MenuButtonBase
 
     public Action<int> OnPush;
 
- //   protected override void Start ()
- //   {
-		
-	//}
-
     protected override void OnPushed()
     {
         if(OnPush != null)

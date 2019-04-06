@@ -48,7 +48,7 @@ public class EdgeTexture : MonoBehaviour
         var rate = 0f;
         var w = 0f;
         var h = 0f;
-        if (tex.width < MAX_EDGE_TEX_X && tex.width < tex.height)
+        if (tex.width < MAX_EDGE_TEX_X && tex.width <= tex.height)
         {
             rate = MAX_EDGE_TEX_Y / tex.height;
             if (tex.width > tex.height)
