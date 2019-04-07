@@ -7,25 +7,88 @@ using UnityEngine;
 
 public class PictureBookAnimation : MonoBehaviour
 {
-    private float elapse = 0f;
-    public float Value;
+    private static readonly string PATH = "Textures/ColoringPages/";
 
-    protected virtual void Start ()
+    /// <summary>
+    /// タッチアニメーションさせるかどうか
+    /// </summary>
+    public bool IsPlayableTouchedAnime = false;
+    /// <summary>
+    /// タッチアニメーションカーブ
+    /// </summary>
+    public AnimationCurve TouchedCurve;
+
+    /// <summary>
+    /// タッチアニメ再生中
+    /// </summary>
+    private bool isPlayingTouched;
+    /// <summary>
+    /// タッチアニメの長さ(秒)
+    /// </summary>
+    private float touchedAnimeTime = 1f;
+    /// <summary>
+    /// タッチアニメの経過時間
+    /// </summary>
+    private float touchedAnimeElapsed = 0f;
+    /// <summary>
+    /// 初期スケール
+    /// </summary>
+    private Vector3 baseScale;
+
+    void Start ()
     {
-        TextureLoad();
+        var kyes = TouchedCurve.keys;
+        touchedAnimeTime = kyes[TouchedCurve.length - 1].time;
+        baseScale = transform.localScale;
+        SetRandomTexture();
     }
 	
-	protected virtual void Update ()
+	void Update ()
     {
+        OnTouchedAnimation();
+    }
+
+    public void OnTouched()
+    {
+        isPlayingTouched = true;
+        ResetBeforeTouched();
     }
 
     /// <summary>
-    /// お絵描きした画像をロード
+    /// タッチアニメ開始前の状態にリセット
     /// </summary>
-    protected void TextureLoad()
+    private void ResetBeforeTouched()
     {
-        var tmp = Resources.Load<Texture2D>("Textures/ColoringPages/" + name);
+        touchedAnimeElapsed = 0;
+        transform.localScale = baseScale;
+    }
 
+    /// <summary>
+    /// タッチ時のアニメーション
+    /// </summary>
+    private void OnTouchedAnimation()
+    {
+        if (!IsPlayableTouchedAnime || !isPlayingTouched)
+            return;
+
+        if (touchedAnimeElapsed < touchedAnimeTime)
+        {
+            var val = TouchedCurve.Evaluate(touchedAnimeElapsed);
+            transform.localScale = baseScale * val;
+            touchedAnimeElapsed += Time.deltaTime;
+        }
+        else
+        {
+            isPlayingTouched = false;
+            ResetBeforeTouched();
+        }
+    }
+
+    /// <summary>
+    /// ランダムにお絵描きした画像をロード
+    /// </summary>
+    private void SetRandomTexture()
+    {
         //オブジェクトの名前からフォルダパスを取得
         var path = Utils.GetWriteFolderPath(name);
 
@@ -34,17 +97,31 @@ public class PictureBookAnimation : MonoBehaviour
 
         // ランダムに選択
         var filePaths = Directory.GetFiles(path, "*.png", SearchOption.TopDirectoryOnly).OrderBy(f => File.GetCreationTime(f)).ToArray();
-        if(filePaths.Length == 0)
+        if (filePaths.Length == 0)
             return;
 
         int num = Random.Range(0, filePaths.Length);
-        var tex = Utils.LoadTextureByFileIO(filePaths[num], tmp.width, tmp.height);
-        //var tex = Utils.LoadTextureByFileIO(Application.streamingAssetsPath + "/" + "SavedScreen.png", tmp.width, tmp.height);
-
-        SetTexture(tex);
+        TextureLoad(filePaths[num]);
     }
 
-    private void SetTexture(Texture2D tex)
+    /// <summary>
+    /// お絵描きした画像をロード
+    /// </summary>
+    private void TextureLoad(string filePath)
+    {
+        // サイズ取得用に元画像をロード
+        var tmp = Resources.Load<Texture2D>(PATH + name);
+        var tex = Utils.LoadTextureByFileIO(filePath, tmp.width, tmp.height);
+        //var tex = Utils.LoadTextureByFileIO(filePath, tmp.width, tmp.height);
+
+        SetTextureOnShader(tex);
+    }
+
+    /// <summary>
+    /// シェーダーにテクスチャを渡す
+    /// </summary>
+    /// <param name="tex"></param>
+    private void SetTextureOnShader(Texture2D tex)
     {
         var mat = GetComponent<SpriteRenderer>().material;
         mat.SetTexture("_SourceTex", tex);

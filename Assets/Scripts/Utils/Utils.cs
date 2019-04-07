@@ -8,6 +8,10 @@ namespace Tanaka
     public static class Utils
     {
 
+        public static readonly float TARGET_RATIO = 9f / 16f;
+        public static readonly float CURRENT_RATIO = (float)Screen.height / Screen.width;
+        public static readonly float DISPLAY_RATIO = TARGET_RATIO / CURRENT_RATIO;
+
         /// <summary>
         /// 保存パス取得
         /// </summary>

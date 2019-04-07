@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Tanaka
 {
@@ -50,18 +51,42 @@ namespace Tanaka
         }
 
         /// <summary>
-        /// タッチ座標のワールド変換。
+        /// Orthカメラでのタッチ座標のワールド変換。
         /// タッチしていない場合、xyzすべて-1。
         /// </summary>
         /// <param name="cam"></param>
         /// <returns></returns>
-        public static Vector3 GetTouchWorldPosition(Camera cam)
+        public static Vector3 GetTouchWorldPositionOnOrth(Camera cam)
         {
             if (GetTouch() == TouchInfo.None)
                 return -Vector3.one;
 
-            TouchPosition = cam.ScreenToWorldPoint(GetPosition());
-            Debug.Log("タッチワールド座標：" + TouchPosition);
+            var pos = GetPosition();
+            // Perspectiveカメラの場合、Z座標が必要になってくるのでカメラZを代入
+            pos.z = 7.6f;
+
+            TouchPosition = cam.ScreenToWorldPoint(pos);
+            //Debug.Log("タッチワールド座標：" + TouchPosition);
+            return TouchPosition;
+        }
+        /// <summary>
+        /// Persカメラでのタッチ座標のワールド変換。
+        /// タッチしていない場合、xyzすべて-1。
+        /// </summary>
+        /// <param name="cam"></param>
+        /// <returns></returns>
+        public static Vector3 GetTouchWorldPositionOnPers(Camera cam, GameObject obj)
+        {
+            if (GetTouch() == TouchInfo.None)
+                return -Vector3.one;
+
+            var pos = GetPosition();
+            // Perspectiveカメラの場合、Z座標が必要になってくるので
+            // 目標のオブジェクトとカメラのZを計算して代入
+            pos.z = obj.transform.position.z - cam.transform.position.z;
+
+            TouchPosition = cam.ScreenToWorldPoint(pos);
+            //Debug.Log("タッチワールド座標：" + TouchPosition);
             return TouchPosition;
         }
 
@@ -78,7 +103,7 @@ namespace Tanaka
             TouchPosition = GetPosition();
 
             var ratio = new Vector3(TouchPosition.x / Screen.width, TouchPosition.y / Screen.height);
-            Debug.Log("タッチ座標比率：" + ratio);
+            //Debug.Log("タッチ座標比率：" + ratio);
             return ratio;
         }
 
@@ -90,6 +115,43 @@ namespace Tanaka
             var touch = Input.GetTouch(0);
             return touch.position;
 #endif
+        }
+
+        /// <summary>
+        /// タッチ座標上にオブジェクトがあったらすべて取得
+        /// </summary>
+        /// <returns></returns>
+        public static Type[] GetTouchObjects<Type>()
+            where Type : class
+        {
+            if (GetTouch() != TouchInfo.Began)
+                return null;
+
+            var ray = Camera.main.ScreenPointToRay(GetPosition());
+            var hits = Physics.RaycastAll(ray.origin, ray.direction);
+            if (hits.Length == 0)
+                return null;
+            return hits.Select(h => h.collider.GetComponent<Type>()).ToArray();
+        }
+
+        /// <summary>
+        /// 指定のオブジェクトがタッチされたかどうか
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsTouchObject(GameObject obj)
+        {
+            if (GetTouch() != TouchInfo.Began)
+                return false;
+            var hit = new RaycastHit();
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //マウスクリックした場所からRayを飛ばし、オブジェクトがあればtrue 
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.GetInstanceID() == obj.GetInstanceID())
+                    return true;
+            }
+            return false;
         }
     }
 }
