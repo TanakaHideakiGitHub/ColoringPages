@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114474627772503700}
   - component: {fileID: 114195157065484664}
   - component: {fileID: 114039689226788516}
+  - component: {fileID: 65626029637113330}
   m_Layer: 0
   m_Name: 09
   m_TagString: Untagged
@@ -219,6 +220,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65626029637113330
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1227175526626248}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.7502384, y: 3.4601657, z: 0}
+  m_Center: {x: -0.013397574, y: 0.020082831, z: 0}
 --- !u!95 &95548549617663420
 Animator:
   serializedVersion: 3
@@ -248,7 +261,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676d844bc94b54649a84ba00f066b44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 0
+  IsPlayableTouchedAnime: 1
+  TouchedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.14807095
+      value: 1.4312414
+      inSlope: 0.3544372
+      outSlope: 0.3544372
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.36528915
+    - serializedVersion: 3
+      time: 1
+      value: 1.0062485
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114195157065484664
 MonoBehaviour:
   m_ObjectHideFlags: 1

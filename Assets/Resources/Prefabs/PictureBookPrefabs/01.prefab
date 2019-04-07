@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4517852372538682}
   m_Layer: 0
-  m_Name: New CCDSolver2D_Target
+  m_Name: RightWing_Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4090100168581164}
   m_Layer: 0
-  m_Name: New CCDSolver2D_Target
+  m_Name: LeftWing_Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +144,8 @@ GameObject:
   - component: {fileID: 114754466110344428}
   - component: {fileID: 114885232199446458}
   - component: {fileID: 114167565425083848}
+  - component: {fileID: 95744924084040160}
+  - component: {fileID: 65366694359248708}
   m_Layer: 0
   m_Name: 01
   m_TagString: Untagged
@@ -253,7 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4566350783460912}
   m_Layer: 0
-  m_Name: New CCDSolver2D_Target
+  m_Name: BeakUp_Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4598057620519444}
   m_Layer: 0
-  m_Name: New CCDSolver2D_Target
+  m_Name: BeakDown_Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +453,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1465589569301322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.35, y: 0, z: 0}
+  m_LocalPosition: {x: -6.52, y: 0, z: -2.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4401148015961212}
@@ -569,6 +571,36 @@ Transform:
   m_Father: {fileID: 4491427571809464}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65366694359248708
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465589569301322}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6100001, y: 3.3000002, z: 0}
+  m_Center: {x: 0.00999999, y: -0.049999952, z: 0}
+--- !u!95 &95744924084040160
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465589569301322}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b91691e0f95de5e4eb7170954520b86e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114167565425083848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -580,7 +612,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676d844bc94b54649a84ba00f066b44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 0
+  IsPlayableTouchedAnime: 1
+  TouchedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.14807095
+      value: 1.4312414
+      inSlope: 0.3544372
+      outSlope: 0.3544372
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.36528915
+    - serializedVersion: 3
+      time: 1
+      value: 1.0062485
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114606396643431062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -755,7 +820,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b7dfa152e19eb694a9bec181885bbe82, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
