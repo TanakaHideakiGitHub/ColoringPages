@@ -9,7 +9,7 @@ public class Page
     /// 横1920のとき、書き込みテクスチャのサイズは1820にするので
     /// その割合を出しておく
     /// </summary>
-    private static readonly float WRITE_ASPECT_RATIO_X = 1820f / 1920f;
+    public static readonly float WRITE_ASPECT_RATIO_X = 1820f / 1920f;
 
     /// <summary>
     /// 書き込み用テクスチャ

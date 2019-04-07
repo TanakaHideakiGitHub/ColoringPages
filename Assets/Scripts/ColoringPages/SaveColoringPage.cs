@@ -11,18 +11,33 @@ public class SaveColoringPage
     {
         yield return new WaitForEndOfFrame();
 
-        var rate = (float)EdgeTex.Texture.width / EdgeTex.Texture.height;
-        var r = 1820f / 1920f;
+        var texRate = (float)EdgeTex.Texture.width / EdgeTex.Texture.height;
         // 画面全体ではなく表示されている書き込み用キャンバスと同サイズにする
         var height = Screen.height;
-        var width = Mathf.RoundToInt(Screen.height * rate);
+        var width = Mathf.RoundToInt(Screen.height * texRate * EdgeTexture.RESOLUTION_RATE);
+
+        var canvasRate = 1820f / 1920f;
+        var left = (Screen.width * canvasRate - width) * 0.5f;
+
+        // 横長の画像の場合
+        var bottom = 0f;
+        if (width > Screen.width)
+        {
+            // 画面幅以上のwidthを画面幅に合わせる
+            var applyRate = Screen.width * canvasRate / width;
+            width =  Mathf.RoundToInt(applyRate * width);
+            height = Mathf.RoundToInt(applyRate * height);
+            left = 0;
+            bottom = EdgeTexture.HEIGHT * 0.5f;
+        }
+
         var tex = new Texture2D(width, height, TextureFormat.RGB24, false);
         tex.name = EdgeTex.Texture.name;
-        tex.ReadPixels(new Rect((Screen.width * r - width) / 2, 0, width, height), 0, 0);
+        tex.ReadPixels(new Rect(left, bottom, width, height), 0, 0);
         tex.Apply();
 
+        TextureScale.Point(tex, Mathf.RoundToInt(Screen.height * texRate), height);
         yield return EdgeTex.StartCoroutine(WriteFile(tex));
-        yield return null;
     }
 
     private IEnumerator WriteFile(Texture2D tex)
@@ -47,7 +62,7 @@ public class SaveColoringPage
 #else
 
         Debug.Log("WriteFile");
-        File.WriteAllBytes(path/*"SavedScreen0.png"*/, bytes);
+        File.WriteAllBytes(path, bytes);
         yield return null;
 #endif
     }
