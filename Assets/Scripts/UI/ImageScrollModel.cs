@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class ImageScrollModel
 {
+    private static readonly string PRESET_IMAGES_RESOURCES_PATH = "Textures/ColoringPages/Preset";
+
     /// <summary>
     /// 表示物の合計数
     /// </summary>
@@ -48,7 +50,7 @@ public class ImageScrollModel
     /// </summary>
     private void LoadColoringPagesFromResourcesOnInit()
     {
-        var sprites = Resources.LoadAll("Textures/ColoringPages", typeof(Sprite));
+        var sprites = Resources.LoadAll(PRESET_IMAGES_RESOURCES_PATH, typeof(Sprite));
         ItemsCount = sprites.Length;
 
         fileNames = new string[sprites.Length];

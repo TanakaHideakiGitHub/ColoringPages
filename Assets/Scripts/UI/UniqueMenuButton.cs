@@ -6,7 +6,7 @@ using UnityEngine;
 public enum UniqueMenuButtonType
 {
     AllEraze,
-    PulletMove,
+    PaletteMove,
     Save,
     ChangeScene,
     OpenScroller,

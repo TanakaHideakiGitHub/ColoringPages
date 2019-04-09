@@ -27,29 +27,29 @@ public class MenuView : MonoBehaviour
     /// 色変更などのパレット並べる用レイアウトグループ
     /// </summary>
     [SerializeField]
-    private GameObject ColorPulletParent;
+    private GameObject ColorPaletteParent;
 
     /// <summary>
     /// パレット移動用ボタンのテキスト
     /// </summary>
     [SerializeField]
-    private Text PulletMoveButtonText;
+    private Text PaletteMoveButtonText;
 
-    private int ColorPulletMoveInHash = Animator.StringToHash("UIColorPulletAnimation");
-    private int ColorPulletMoveOutHash = Animator.StringToHash("ReturnUIColorPulletAnimation");
+    private int ColorPaletteMoveInHash = Animator.StringToHash("UIColorPaletteAnimation");
+    private int ColorPaletteMoveOutHash = Animator.StringToHash("ReturnUIColorPaletteAnimation");
 
     /// <summary>
     /// パレット移動中かどうか
     /// </summary>
-    private bool isMovingPullet = false;
+    private bool isMovingPalette = false;
 
     /// <summary>
     /// パレット開いた状態かどうか
     /// </summary>
-    public bool IsOpendColorPullet { get; private set; }
+    public bool IsOpendColorPalette { get; private set; }
 
 
-    public Animator ColorPulletAnime;
+    public Animator ColorPaletteAnime;
 
     void Start ()
     {
@@ -81,34 +81,34 @@ public class MenuView : MonoBehaviour
     }
 
 
-    public IEnumerator OpenColorPullet(float time)
+    public IEnumerator OpenColorPalette(float time)
     {
-        if (isMovingPullet)
+        if (isMovingPalette)
             yield break;
-        isMovingPullet = true;
-        ColorPulletAnime.Play(ColorPulletMoveInHash, 0, 0);
+        isMovingPalette = true;
+        ColorPaletteAnime.Play(ColorPaletteMoveInHash, 0, 0);
         //normarizedTimeの0化は1F後におこなわれるので一旦待つ
         yield return null;
 
-        while (ColorPulletAnime.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        while (ColorPaletteAnime.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
-        isMovingPullet = false;
-        IsOpendColorPullet = true;
-        PulletMoveButtonText.text = "▽";
+        isMovingPalette = false;
+        IsOpendColorPalette = true;
+        PaletteMoveButtonText.text = "▽";
     }
-    public IEnumerator CloseColorPullet(float time)
+    public IEnumerator CloseColorPalette(float time)
     {
-        if (isMovingPullet)
+        if (isMovingPalette)
             yield break;
-        isMovingPullet = true;
-        ColorPulletAnime.Play(ColorPulletMoveOutHash, 0, 0);
+        isMovingPalette = true;
+        ColorPaletteAnime.Play(ColorPaletteMoveOutHash, 0, 0);
         //normarizedTimeの0化は1F後におこなわれるので一旦待つ
         yield return null;
 
-        while (ColorPulletAnime.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        while (ColorPaletteAnime.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
-        isMovingPullet = false;
-        IsOpendColorPullet = false;
-        PulletMoveButtonText.text = "△";
+        isMovingPalette = false;
+        IsOpendColorPalette = false;
+        PaletteMoveButtonText.text = "△";
     }
 }

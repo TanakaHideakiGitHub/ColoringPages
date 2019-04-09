@@ -28,7 +28,7 @@ public class SaveColoringPage
             width =  Mathf.RoundToInt(applyRate * width);
             height = Mathf.RoundToInt(applyRate * height);
             left = 0;
-            bottom = EdgeTexture.HEIGHT * 0.5f;
+            bottom = EdgeTex.RectTransformBottom * 0.5f;
         }
 
         var tex = new Texture2D(width, height, TextureFormat.RGB24, false);

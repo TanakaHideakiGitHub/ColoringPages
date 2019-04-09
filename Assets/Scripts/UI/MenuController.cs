@@ -28,7 +28,7 @@ public class MenuController : MonoBehaviour
     void SetUniqueButtonPush()
     {
         View.SetUniqueButton(OnAllEraze, UniqueMenuButtonType.AllEraze);
-        View.SetUniqueButton(PulletMove, UniqueMenuButtonType.PulletMove);
+        View.SetUniqueButton(PaletteMove, UniqueMenuButtonType.PaletteMove);
         View.SetUniqueButton(Painter.OnSaveButton, UniqueMenuButtonType.Save);
         View.SetUniqueButton(Painter.OpenImageScroller, UniqueMenuButtonType.OpenScroller);
     }
@@ -36,29 +36,29 @@ public class MenuController : MonoBehaviour
     private void OnColorPush(Color col)
     {
         Painter.ColorChange(col);
-        PulletMove();
+        PaletteMove();
     }
     private void OnAllEraze()
     {
         Painter.CreatePage();
-        PulletMove();
+        PaletteMove();
     }
 
-    private void PulletMove()
+    private void PaletteMove()
     {
-        StartCoroutine(PulletMoceCoroutine());
+        StartCoroutine(PaletteMoceCoroutine());
     }
 
-    private IEnumerator PulletMoceCoroutine()
+    private IEnumerator PaletteMoceCoroutine()
     {
-        if (!View.IsOpendColorPullet)
+        if (!View.IsOpendColorPalette)
         {
             Painter.IsUnpaintable = true;
-            yield return StartCoroutine(View.OpenColorPullet(0.5f));
+            yield return StartCoroutine(View.OpenColorPalette(0.5f));
         }
         else
         {
-            yield return StartCoroutine(View.CloseColorPullet(0.5f));
+            yield return StartCoroutine(View.CloseColorPalette(0.5f));
             Painter.IsUnpaintable = false;
         }
     }
