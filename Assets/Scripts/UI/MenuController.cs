@@ -10,22 +10,24 @@ public class MenuController : MonoBehaviour
     public MenuView View;
     public Painter Painter;
 
+    public bool IsOpend { get { return View.IsOpendColorPalette; } }
+
     void Start ()
     {
         SetColorButtonPush();
         SetScaleButtonPush();
         SetUniqueButtonPush();
     }
-	
-    void SetColorButtonPush()
+
+    private void SetColorButtonPush()
     {
         View.SetColorButtonListener(OnColorPush);
     }
-    void SetScaleButtonPush()
+    private void SetScaleButtonPush()
     {
         View.SetScaleButtonListener(Painter.ChangeScale);
     }
-    void SetUniqueButtonPush()
+    private void SetUniqueButtonPush()
     {
         View.SetUniqueButton(OnAllEraze, UniqueMenuButtonType.AllEraze);
         View.SetUniqueButton(PaletteMove, UniqueMenuButtonType.PaletteMove);
@@ -52,14 +54,8 @@ public class MenuController : MonoBehaviour
     private IEnumerator PaletteMoceCoroutine()
     {
         if (!View.IsOpendColorPalette)
-        {
-            Painter.IsUnpaintable = true;
             yield return StartCoroutine(View.OpenColorPalette(0.5f));
-        }
         else
-        {
             yield return StartCoroutine(View.CloseColorPalette(0.5f));
-            Painter.IsUnpaintable = false;
-        }
     }
 }

@@ -12,10 +12,9 @@ public class SaveColoringPage
         yield return new WaitForEndOfFrame();
 
         var texRate = (float)EdgeTex.Texture.width / EdgeTex.Texture.height;
-        // 画面全体ではなく表示されている書き込み用キャンバスと同サイズにする
+        // スクショは画面全体ではなく表示されている書き込み用キャンバスと同サイズにする
         var height = Screen.height;
         var width = Mathf.RoundToInt(Screen.height * texRate * EdgeTexture.RESOLUTION_RATE);
-
         var canvasRate = 1820f / 1920f;
         var left = (Screen.width * canvasRate - width) * 0.5f;
 

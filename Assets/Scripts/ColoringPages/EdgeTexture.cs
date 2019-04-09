@@ -19,6 +19,9 @@ public class EdgeTexture : MonoBehaviour
     /// </summary>
     private static readonly float MAX_EDGE_TEX_Y = 1080f;
 
+    /// <summary>
+    /// 輪郭表示用オブジェクト
+    /// </summary>
     private RawImage edgeTex;
     public Texture Texture { get { return edgeTex.texture; } set { edgeTex.texture = value; } }
     public RectTransform RectTransform { get { return edgeTex.rectTransform; } }
@@ -67,7 +70,6 @@ public class EdgeTexture : MonoBehaviour
                 w = MAX_EDGE_TEX_X - tex.width * rate;
             }
         }
-        Debug.Log(rate);
 
         var left = w * 0.5f;
         var right = -w * 0.5f;

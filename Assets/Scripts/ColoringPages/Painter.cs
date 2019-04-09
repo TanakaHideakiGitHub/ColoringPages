@@ -8,16 +8,6 @@ using Tanaka;
 
 public class Painter : MonoBehaviour
 {
-    enum ColorType
-    {
-        Erazer = 0,
-        Red,
-        Green,
-        Blue,
-        White,
-        Gray
-    }
-
     /// <summary>
     /// 輪郭表示用テクスチャ
     /// </summary>
@@ -35,16 +25,18 @@ public class Painter : MonoBehaviour
     /// </summary>
     private SaveColoringPage saveScreen;
 
-    public GameObject Menus;
+    [SerializeField]
+    private MenuController Menus;
 
-    public ImageScrollController ImageScroller;
+    [SerializeField]
+    private ImageScrollController ImageScroller;
 
     private Page writePage;
 
     /// <summary>
     /// 書き込み不可状態かどうか
     /// </summary>
-    public bool IsUnpaintable { get; set; }
+    private bool isUnpaintable = false;
 
     void Start ()
     {
@@ -52,18 +44,30 @@ public class Painter : MonoBehaviour
 
         CreatePage();
         ImageScroller.Initialize();
-        //ImageScroller.gameObject.SetActive(false);
     }
 	
 	void Update ()
     {
-        if (IsUnpaintable)
-            return;
-        // マウスクリック
-        if (UtilTouch.GetTouch() != TouchInfo.None)
-            writePage.UpdatePixel(UtilTouch.GetTouchPosition());
+        Paint();
+    }
+
+    private void Paint()
+    {
+        if (Menus.IsOpend || ImageScroller.IsOpend)
+            isUnpaintable = true;
         else
-            writePage.ResetPrePosition();
+        {
+            // 閉じた場合は同フレームで書き込みが行われないようにreturn
+            if (isUnpaintable)
+            {
+                isUnpaintable = false;
+                return;
+            }
+            if (UtilTouch.GetTouch() != TouchInfo.None)
+                writePage.UpdatePixel(UtilTouch.GetTouchPosition());
+            else
+                writePage.ResetPrePosition();
+        }
     }
 
     /// <summary>
@@ -107,11 +111,11 @@ public class Painter : MonoBehaviour
 
     private IEnumerator SaveScreenShot()
     {
-        Menus.SetActive(false);
+        Menus.gameObject.SetActive(false);
 
         yield return StartCoroutine(saveScreen.Save(edgeTex));
 
-        Menus.SetActive(true);
+        Menus.gameObject.SetActive(true);
     }
 
 }

@@ -86,6 +86,7 @@ public class MenuView : MonoBehaviour
         if (isMovingPalette)
             yield break;
         isMovingPalette = true;
+        IsOpendColorPalette = true;
         ColorPaletteAnime.Play(ColorPaletteMoveInHash, 0, 0);
         //normarizedTimeの0化は1F後におこなわれるので一旦待つ
         yield return null;
@@ -93,7 +94,6 @@ public class MenuView : MonoBehaviour
         while (ColorPaletteAnime.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
         isMovingPalette = false;
-        IsOpendColorPalette = true;
         PaletteMoveButtonText.text = "▽";
     }
     public IEnumerator CloseColorPalette(float time)

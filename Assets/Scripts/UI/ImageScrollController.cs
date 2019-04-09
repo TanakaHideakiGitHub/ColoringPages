@@ -42,21 +42,13 @@ public class ImageScrollController : MonoBehaviour
     }
     public void Open()
     {
-        painter.IsUnpaintable = true;
+        //painter.IsUnpaintable = true;
         viewer.ResetScrollerPosition();
         viewer.gameObject.SetActive(true);
     }
     public void Close()
     {
         viewer.gameObject.SetActive(false);
-        StartCoroutine(SetCloseAfterFrame());
-    }
-    private IEnumerator SetCloseAfterFrame()
-    {
-        // スクロールを閉じると同時にフラグOFFだと閉じるためのクリックで
-        // 書き込みが行われてしまうので1F待つ
-        yield return null;
-        painter.IsUnpaintable = false;
     }
 
     /// <summary>
