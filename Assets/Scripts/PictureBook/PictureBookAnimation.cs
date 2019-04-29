@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PictureBookAnimation : MonoBehaviour
 {
-    private static readonly string PATH = "Textures/ColoringPages/";
+    private static readonly string PATH = "Textures/ColoringPages/Preset/";
 
     /// <summary>
     /// タッチアニメーションさせるかどうか
