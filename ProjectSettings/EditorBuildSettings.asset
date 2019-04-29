@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ColoringPages.unity
     guid: e1dd1f19954044a48bcc0360cd78ec47
   - enabled: 1
-    path: Assets/Scenes/PictureBook.unity
+    path: Assets/Scenes/PictureBook1.unity
     guid: 8dc6c2b491c9ac34bbc9efa968f0cd9d
+  - enabled: 1
+    path: Assets/Scenes/PictureBook2.unity
+    guid: f6e86f80c29e7bd49b8477eb40bdf201
   m_configObjects: {}

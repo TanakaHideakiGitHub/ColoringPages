@@ -8,6 +8,8 @@ using Tanaka;
 
 public class Painter : MonoBehaviour
 {
+    private static readonly string PRESET_IMAGES_RESOURCES_PATH = "Textures/ColoringPages/Preset";
+
     /// <summary>
     /// 輪郭表示用テクスチャ
     /// </summary>
@@ -28,8 +30,8 @@ public class Painter : MonoBehaviour
     [SerializeField]
     private MenuController Menus;
 
-    [SerializeField]
-    private ImageScrollController ImageScroller;
+    //[SerializeField]
+    private ImageScrollController imageScroller;
 
     private Page writePage;
 
@@ -43,7 +45,8 @@ public class Painter : MonoBehaviour
         saveScreen = new SaveColoringPage();
 
         CreatePage();
-        ImageScroller.Initialize();
+        imageScroller = ImageScrollController.Instance;
+        //ImageScroller.Initialize();
     }
 	
 	void Update ()
@@ -53,7 +56,7 @@ public class Painter : MonoBehaviour
 
     private void Paint()
     {
-        if (Menus.IsOpend || ImageScroller.IsOpend)
+        if (Menus.IsOpend || imageScroller.IsOpend)
             isUnpaintable = true;
         else
         {
@@ -84,10 +87,10 @@ public class Painter : MonoBehaviour
     /// </summary>
     public void OpenImageScroller()
     {
-        if (!ImageScroller.IsOpend)
-            ImageScroller.Open();
+        if (!imageScroller.IsOpend)
+            imageScroller.Open(PRESET_IMAGES_RESOURCES_PATH, SetEdgeTexture);
         else
-            ImageScroller.Close();
+            imageScroller.Close();
     }
 
     public void SetEdgeTexture(Texture2D tex)

@@ -14,6 +14,9 @@ public class ScrollViewer : MonoBehaviour
 
     private ScrollRect scroll;
 
+    /// <summary>
+    /// 表示に利用するオブジェクト最大数
+    /// </summary>
     private int maxViewObjectCount;
 
     /// <summary>
@@ -107,6 +110,8 @@ public class ScrollViewer : MonoBehaviour
 
         for (int i = 0; i < ItemList.Count; ++i)
         {
+            if (i >= list.Count)
+                break;
             var image = ItemList.ElementAt(i).GetComponent<Image>();
             image.sprite = list[i];
             image.gameObject.SetActive(true);

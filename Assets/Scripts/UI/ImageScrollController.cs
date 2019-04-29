@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ImageScrollController : MonoBehaviour
+public class ImageScrollController : SingletonMonoBehaviour<ImageScrollController>
 {
     /// <summary>
     /// 表示に利用するオブジェクト数
@@ -13,8 +14,10 @@ public class ImageScrollController : MonoBehaviour
     [SerializeField]
     private ScrollViewer viewer;
 
-    [SerializeField]
-    private Painter painter;
+    /// <summary>
+    /// ノードが押下されたときに処理する関数の登録
+    /// </summary>
+    private Action<Texture2D> onNodePush;
 
     private ImageScrollModel imagesModel;
 
@@ -23,26 +26,27 @@ public class ImageScrollController : MonoBehaviour
     /// </summary>
     public bool IsOpend { get { return viewer.gameObject.activeSelf; } }
 
-    private void Start()
+    void Start()
     {
-        viewer.SetNodeButtonAction(SetNodeTexture4EdgeTexture);
         Close();
     }
 
-    public void Initialize()
+    public void Initialize(string folderPath)
     {
         var items = viewer.ViewContent.GetComponentsInChildren<CanvasRenderer>().Select(i => i.GetComponent<RectTransform>()).ToArray();
         imagesModel = new ImageScrollModel(items, MAX_VIEW_ITEMS);
-
+        imagesModel.Initialize(folderPath);
         viewer.Initialize(MAX_VIEW_ITEMS, imagesModel.ItemsCount, imagesModel.SpriteList);
         viewer.OnUpdateItemsByScroll = OnUpdateItemsByScroll;
 
         // スクロールによる画像更新処理を登録
         imagesModel.OnUpdateImage = viewer.OnUpdateImage;
     }
-    public void Open()
+    public void Open(string folderPath, Action<Texture2D> onNodePush)
     {
-        //painter.IsUnpaintable = true;
+        Initialize(folderPath);
+        this.onNodePush = onNodePush;
+        viewer.SetNodeButtonAction(OnNodePush);
         viewer.ResetScrollerPosition();
         viewer.gameObject.SetActive(true);
     }
@@ -52,12 +56,13 @@ public class ImageScrollController : MonoBehaviour
     }
 
     /// <summary>
-    /// スクロールで選択されたテクスチャを表示用オブジェクトにセット
+    /// ノード押下されたときの処理
     /// </summary>
     /// <param name="tex"></param>
-    private void SetNodeTexture4EdgeTexture(Texture2D tex)
+    private void OnNodePush(Texture2D tex)
     {
-        painter.SetEdgeTexture(tex);
+        if(onNodePush != null)
+            onNodePush(tex);
         Close();
     }
 

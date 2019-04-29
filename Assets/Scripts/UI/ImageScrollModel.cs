@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class ImageScrollModel
 {
-    private static readonly string PRESET_IMAGES_RESOURCES_PATH = "Textures/ColoringPages/Preset";
+    //private static readonly string PRESET_IMAGES_RESOURCES_PATH = "Textures/ColoringPages/Preset";
 
     /// <summary>
     /// 表示物の合計数
@@ -26,8 +26,7 @@ public class ImageScrollModel
     /// <summary>
     /// ロード画像キャッシュ用リスト
     /// </summary>
-    private List<Sprite> spriteList = new List<Sprite>();
-    public List<Sprite> SpriteList { get { return spriteList; } }
+    public List<Sprite> SpriteList { get; private set; }
 
     /// <summary>
     /// 切り替える画像取得時にView側の画像更新処理呼び出し用
@@ -37,26 +36,27 @@ public class ImageScrollModel
     public ImageScrollModel(RectTransform[] items, int viewObjCnt)
     {
         maxViewObjectCount = viewObjCnt;
-        Initialize();
+        //Initialize();
     }
 
-    private void Initialize()
+    public void Initialize(string imageFolderPath)
     {
-        LoadColoringPagesFromResourcesOnInit();
+        LoadColoringPagesFromResourcesOnInit(imageFolderPath);
     }
 
     /// <summary>
     /// お絵描き表示用画像のロード
     /// </summary>
-    private void LoadColoringPagesFromResourcesOnInit()
+    private void LoadColoringPagesFromResourcesOnInit(string imageFolderPath)
     {
-        var sprites = Resources.LoadAll(PRESET_IMAGES_RESOURCES_PATH, typeof(Sprite));
+        var sprites = Resources.LoadAll(imageFolderPath/*PRESET_IMAGES_RESOURCES_PATH*/, typeof(Sprite));
         ItemsCount = sprites.Length;
 
         fileNames = new string[sprites.Length];
+        SpriteList = new List<Sprite>();
         for (var i = 0; i < ItemsCount; ++i)
         {
-            spriteList.Add((Sprite)sprites[i]);
+            SpriteList.Add((Sprite)sprites[i]);
             fileNames[i] = sprites[i].name;
         }
     }
@@ -88,14 +88,14 @@ public class ImageScrollModel
                 break;
             var path = fileNames[i];
             var name = Path.GetFileName(path);
-            Sprite sprite = spriteList.FirstOrDefault(s => s.name == name);
+            Sprite sprite = SpriteList.FirstOrDefault(s => s.name == name);
             if (sprite == null)
             {
                 //var tex = Utils.LoadTextureByFileIO(path, 100, 100);
                 var tex = Utils.LoadTextureByWebRequest(path, 100, 100);
                 sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
                 sprite.name = name;
-                spriteList.Add(sprite);
+                SpriteList.Add(sprite);
             }
 
             if (OnUpdateImage != null)
