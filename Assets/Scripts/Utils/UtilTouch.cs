@@ -21,7 +21,7 @@ namespace Tanaka
 
         public static TouchInfo GetTouch()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
             if (Input.GetMouseButtonDown(0)) { return TouchInfo.Began; }
             if (Input.GetMouseButton(0)) { return TouchInfo.Moved; }
             if (Input.GetMouseButtonUp(0)) { return TouchInfo.Ended; }
@@ -109,7 +109,7 @@ namespace Tanaka
 
         private static Vector3 GetPosition()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
             return Input.mousePosition;
 #else
             var touch = Input.GetTouch(0);

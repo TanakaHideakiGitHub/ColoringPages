@@ -49,7 +49,7 @@ public class SaveColoringPage
         path += fileName;
 
         var bytes = tex.EncodeToPNG();
-#if !UNITY_EDITOR
+#if UNITY_ANDROID
         //var bytes = tex.GetRawTextureData();
         File.WriteAllBytes(path, bytes);
         yield return new WaitForEndOfFrame();

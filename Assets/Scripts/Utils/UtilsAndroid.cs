@@ -6,6 +6,7 @@ namespace Tanaka
 {
     public static class UtilsAndroid
     {
+#if UNITY_ANDROID
         /// <summary>
         /// パブリックフォルダパス取得
         /// </summary>
@@ -55,6 +56,6 @@ namespace Tanaka
             }
             Handheld.StopActivityIndicator();
         }
-
+#endif
     }
 }

@@ -19,7 +19,7 @@ namespace Tanaka
         /// <returns></returns>
         public static string GetWriteFolderPath(string texName)
         {
-#if !UNITY_EDITOR
+#if UNITY_ANDROID
             return UtilsAndroid.GetExternalStorageFileDirectory() + "/ScreenShots/" + texName + "/";
 #else
             return Application.streamingAssetsPath + "/" + texName + "/";
